@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        button[type="submit"] {
+                background-color: #007bff; /* Blue color */
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-bottom: 10px;
+        }
+
+        .join-option {
+            margin-top: 10px;
+        }
+
+        .chat-container {
+            width: 400px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            padding: 10px;
+            overflow-y: scroll;
+            height: 300px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .message.sender {
+            background-color: #d9edf7;
+            align-self: flex-end;
+        }
+
+        .message.sender p {
+            text-align: right;
+        }
+
+        .message.receiver p {
+            text-align: left;
+        }
+
+        .chat-input {
+            padding: 10px;
+            display: flex;
+            background-color: #fff;
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            padding: 8px 15px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #333; /* Adjust the color as needed */
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <a href="/" class="home-button">
+        <button type="submit">Home</button>
+    </a>
+    <select id="roomSelect" class="join-option">
+        <option value="devops">DevOps</option>
+        <option value="cloud">Cloud Computing</option>
+        <option value="covid">Co-Vid 19</option>
+        <option value="sports">Sports</option>
+        <option value="nodejs">Node JS</option>
+    </select><br>
+    <div class="join-button"> <button type="submit">Join</button></div>
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+<script>
+    function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        messageInput.addEventListener("keyup", function (event) {
+            // Check if the Enter key (key code 13) is pressed
+            if (event.keyCode === 13) {
+                // Call the sendMessage function when Enter is pressed
+                sendMessage();
+            }
+        });
+        const message = messageInput.value;
+        if (message) {
+            appendMessage(message, "Username", "sender");
+            messageInput.value = "";
+        }
+    }
+
+    function appendMessage(message, username, type) {
+        const chatMessages = document.getElementById("chatMessages");
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", type);
+        const messageContent = document.createElement("p");
+        messageContent.textContent = message;
+
+        const usernameElement = document.createElement("p");
+        usernameElement.textContent = username;
+        usernameElement.classList.add("username");
+
+        messageElement.appendChild(usernameElement);
+        messageElement.appendChild(messageContent);
+
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
+</body>
+</html>
